@@ -165,7 +165,9 @@ my %optionFormats =
 	'hueBad' =>
 		'x=i',
 	'hueGood' =>
-		'y=i'
+		'y=i',
+        'filterFile' =>
+                'fil=s'
 );
 
 # how option arguments should be displayed based on format codes in %optionFormats
@@ -211,7 +213,8 @@ my %optionDescriptions =
 	'threshold' => 'Threshold for bit score differences when determining "best" hits. Hits with scores that are within this distance of the highest score will be included when computing the lowest common ancestor (or picking randomly if -r is specified).',
 	'thresholdGeneric' => 'Threshold for score differences when determining "best" hits. Hits with scores that are within this distance of the highest score will be included when computing the lowest common ancestor (or picking randomly if -r is specified). If 0, only exact ties for the best hit are used.',
 	'url' => 'URL of Krona resources to use instead of bundling them with the chart (e.g. "http://krona.sourceforge.net"). Reduces size of charts and allows updates, though charts will not work without access to this URL.',
-	'verbose' => 'Verbose.'
+	'verbose' => 'Verbose.',
+        'filterFile' => 'Filter file location.'
 );
 
 
@@ -1428,14 +1431,25 @@ sub htmlFooter
 
 sub htmlHeader
 {
+
+        my ($filter_file) = @_;
+
 	my $path;
 	my $notFound;
 	my $script;
 	
 	if ( $options{'standalone'} && ! $options{'local'} &&  ! $options{'url'} )
 	{
+                open my $fh, '<', $filter_file or die "Can't open file $!";
+                my $file_content = "";
+                while (my $line = <$fh>) {
+                    chomp $line;
+                    $file_content = $file_content . $line . ",";
+                }
+                close($fh);
+                #my $file_content = do { local $/; <$fh> };
 		$script =
-			indent(2) . "<script language=\"javascript\" type=\"text/javascript\">\n" .
+			indent(2) . "<script language=\"javascript\" type=\"text/javascript\">\n var filter_file = \"$file_content\";\n" .
 			slurp("$libPath/../$javascript") . "\n" .
 			indent(2) . "</script>\n";
 		
@@ -1901,7 +1915,8 @@ sub writeTree
 		$attributeDisplayNames, # array ref with display names for $attributes
 		$datasetNames, # array ref with names of datasets
 		$hueStart, # (optional) hue at the start of the gradient for score
-		$hueEnd # (optional) hue at the end of the gradient for score
+		$hueEnd, # (optional) hue at the end of the gradient for score
+                $filter_file
 	) = @_;
 	
 	printWarnings();
@@ -1966,7 +1981,7 @@ sub writeTree
 	}
 	
 	open OUT, ">$options{'out'}";
-	print OUT htmlHeader();
+	print OUT htmlHeader($filter_file);
 	print OUT dataHeader
 	(
 		defined $attributeHash{'magnitude'} ? 'magnitude' : 'count',

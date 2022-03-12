@@ -5341,6 +5341,23 @@ function mouseClick(e)
 		var date = new Date();
 		mouseDownTime = date.getTime();
 		mouseDown = true;
+                
+                if ( !highlightedNode.hasChildren())
+		{
+			console.log("Hello");
+                        var s = filter_file.split(",");
+			console.log(s.length);
+			for (var i = 0; i < s.length; i++) {
+				var curr = s[i].split("\t");
+                                if (highlightedNode.name === curr[0]) {
+                                    console.log("heheXD");
+                                }
+				//console.log(curr[0]);
+			}
+                       
+			console.log(highlightedNode.name);
+			//alert("Hello");
+	        }
 	}
 }
 

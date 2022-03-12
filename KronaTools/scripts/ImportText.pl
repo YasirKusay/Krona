@@ -19,6 +19,7 @@ BEGIN
 
 setOption('out', 'text.krona.html');
 setOption('name', 'all');
+setOption('filterFile', 'heheXD');
 
 my @options =
 qw(
@@ -27,6 +28,7 @@ qw(
 	noMag
 	combine
 	url
+        filterFile
 );
 
 getKronaOptions(@options);
@@ -55,6 +57,8 @@ ignored.',
 	exit 0;
 }
 
+#print($filter_file);
+
 my $tree = newTree();
 my @datasetNames;
 my $set = 0;
@@ -67,6 +71,9 @@ foreach my $input ( @ARGV )
 	{
 		push @datasetNames, $name;
 	}
+
+        print("HI\n");
+        print($fileName);
 	
 	open INFILE, "<$fileName" or die $!;
 	
@@ -114,10 +121,20 @@ my @attributeDisplayNames =
 	'Unassigned'
 );
 
+#filter_file_name = ""
+
+#my $filter_file_name = $filter_file;
+#print($filter_file);
+
+print(getOption('filterFile'));
+
 writeTree
 (
 	$tree,
 	\@attributeNames,
 	\@attributeDisplayNames,
-	\@datasetNames
+	\@datasetNames,
+        undef,
+        undef,
+        getOption('filterFile')
 );

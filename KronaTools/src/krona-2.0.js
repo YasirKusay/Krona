@@ -1,3 +1,5 @@
+var toInsert = document.createElement("text_display");
+
 {//-----------------------------------------------------------------------------
 // 
 // PURPOSE
@@ -5351,6 +5353,13 @@ function mouseClick(e)
 				var curr = s[i].split("\t");
                                 if (highlightedNode.name === curr[0]) {
                                     console.log("heheXD");
+                                    if (document.contains(document.getElementsByName("text_display")[0])) {
+            			        toInsert.innerHTML = "";
+				        document.getElementById("text_display").remove();
+				    }
+                                    toInsert.style.cssText = 'position:absolute;bottom: 0;left: 0; height: 100px; width: 100px;opacity:0.3;z-index:100;background:red';
+                                    toInsert.innerHTML = highlightedNode.name + "\nPid: " + curr[1] + "\nE-val: " + curr[2] + "\nBitscore: " + curr[3];
+                                document.body.appendChild(toInsert);
                                 }
 				//console.log(curr[0]);
 			}

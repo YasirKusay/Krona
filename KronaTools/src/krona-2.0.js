@@ -5350,15 +5350,15 @@ function mouseClick(e)
                         var s = filter_file.split(",");
 			console.log(s.length);
 			for (var i = 0; i < s.length; i++) {
-				var curr = s[i].split("\t");
+				var curr = s[i].trim().split("\t");
                                 if (highlightedNode.name === curr[0]) {
                                     console.log("heheXD");
                                     if (document.contains(document.getElementsByName("text_display")[0])) {
             			        toInsert.innerHTML = "";
 				        document.getElementById("text_display").remove();
 				    }
-                                    toInsert.style.cssText = 'position:absolute;bottom: 0;left: 0; height: 100px; width: 100px;opacity:0.3;z-index:100;background:red';
-                                    toInsert.innerHTML = highlightedNode.name + "\nPid: " + curr[1] + "\nE-val: " + curr[2] + "\nBitscore: " + curr[3];
+                                    toInsert.style.cssText = 'position:absolute;bottom: 0;left: 0; height: 100px; width: 150px;opacity:1;z-index:100;';
+                                    toInsert.innerHTML = highlightedNode.name.bold() + "<br/>" + "\nE-val: ".bold() + curr[1] + "<br/>" + "Bitscore: ".bold() + curr[2] + "<br/>" + "\n% ID: ".bold() + curr[3];
                                 document.body.appendChild(toInsert);
                                 }
 				//console.log(curr[0]);

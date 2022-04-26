@@ -5346,13 +5346,11 @@ function mouseClick(e)
                 
                 if ( !highlightedNode.hasChildren())
 		{
-			console.log("Hello");
                         var s = filter_file.split(",");
 			console.log(s.length);
 			for (var i = 0; i < s.length; i++) {
 				var curr = s[i].trim().split("\t");
                                 if (highlightedNode.name === curr[0]) {
-                                    console.log("heheXD");
                                     if (document.contains(document.getElementsByName("text_display")[0])) {
             			        toInsert.innerHTML = "";
 				        document.getElementById("text_display").remove();

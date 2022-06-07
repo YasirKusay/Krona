@@ -3715,6 +3715,54 @@ value="&harr;" title="Expand this wedge to become the new focus of the chart"/><
 				
 				var immediateParent = currRemove.parentNode
 				immediateParent.removeChild(currRemove)
+
+				// removing empty parent elements (having an abundance of less than 0)
+				// may not always work (because of how Krona adds things up)
+				/*
+				var removeOldParent = false;
+				var childToRemove;
+				for (var currParent = immediateParent; currParent; currParent = currParent.parentNode) {
+					if (removeOldParent) {
+						currParent.removeChild(childToRemove)
+						removeOldParent = false;
+					}
+					if (parseFloat(currParent.firstElementChild.firstElementChild.innerHTML) <= 0) {
+						removeOldParent = true;
+						childToRemove = currParent;
+					}
+					if (currParent.getAttribute("name") === "all") {
+						if (removeOldParent) {
+							currParent.removeChild(childToRemove)
+							removeOldParent = false;
+						}
+						break;
+					}
+				}
+				*/
+
+				// alternatively, check if the stuff has other child nodes :)
+				var removeOldParent = false;
+				var childToRemove;
+
+				for (var currParent = immediateParent; currParent; currParent = currParent.parentNode) {
+					if (removeOldParent) {
+						currParent.removeChild(childToRemove)
+						removeOldParent = false;
+					}
+					console.log(currParent.children[1])
+					if (currParent.children.length === 1) { // length of 1 because of magnitude
+						removeOldParent = true;
+						childToRemove = currParent;
+					}
+					if (currParent.getAttribute("name") === "all") {
+						if (removeOldParent) {
+							currParent.removeChild(childToRemove)
+							removeOldParent = false;
+						}
+						break;
+					}
+				}
+				
 			}
 
 			var html = `

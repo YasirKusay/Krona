@@ -5541,7 +5541,7 @@ function mouseClick(e)
             			        toInsert.innerHTML = "";
 				        document.getElementById("text_display").remove();
 				    }
-                                    toInsert.style.cssText = 'position:absolute;bottom: 0;left: 0; height: 100px; width: 150px;opacity:1;z-index:100;';
+									toInsert.style.cssText = 'position:absolute;bottom: 0px;left: 10px; height: 100px;opacity:1;z-index:100;';
                                     toInsert.innerHTML = highlightedNode.name.bold() + "<br/>" + "\nE-val: ".bold() + curr[1] + "<br/>" + "Bitscore: ".bold() + curr[2] + "<br/>" + "\n% ID: ".bold() + curr[3] + "<br/>" + "Avg Query Length: ".bold() + curr[4];
                                 document.body.appendChild(toInsert);
                                 }

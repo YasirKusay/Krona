@@ -3704,7 +3704,7 @@ value="&harr;" title="Expand this wedge to become the new focus of the chart"/><
 
 				// guard against instances where we may accidentally select nodes that have a rank higher than species
 				// in that case do not remove it
-				if (!currRemove.hasChildren()) {
+				if (currRemove.getElementsByTagName('node').length === 0) {
 					for (var currParent = currRemove.parentNode; currParent; currParent = currParent.parentNode) {
 						console.log(currParent.name)
 						console.log(currParent.firstElementChild.firstElementChild.innerHTML);

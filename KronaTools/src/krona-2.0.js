@@ -3699,23 +3699,22 @@ value="&harr;" title="Expand this wedge to become the new focus of the chart"/><
 		if (toRemove.length > 0) {
 			for (var i = 0; i < toRemove.length; i++) {
 				var currRemove = document.getElementsByName(toRemove[i])[0];
-				console.log(currRemove)
 				if (currRemove === undefined) continue;
 				var valToRemove = currRemove.firstElementChild.firstElementChild.innerHTML;
-				
-				for (var currParent = currRemove.parentNode; currParent; currParent = currParent.parentNode) {
-					console.log(currParent.name)
-					console.log(currParent.firstElementChild.firstElementChild.innerHTML);
-					const old_val = currParent.firstElementChild.firstElementChild.innerHTML
-					currParent.firstElementChild.firstElementChild.innerHTML = parseFloat(old_val) - parseFloat(valToRemove)
-					if (currParent.getAttribute("name") === "all") {
-						break;
-					}
-				}
-				
+
 				// guard against instances where we may accidentally select nodes that have a rank higher than species
 				// in that case do not remove it
 				if (!currRemove.hasChildren()) {
+					for (var currParent = currRemove.parentNode; currParent; currParent = currParent.parentNode) {
+						console.log(currParent.name)
+						console.log(currParent.firstElementChild.firstElementChild.innerHTML);
+						const old_val = currParent.firstElementChild.firstElementChild.innerHTML
+						currParent.firstElementChild.firstElementChild.innerHTML = parseFloat(old_val) - parseFloat(valToRemove)
+						if (currParent.getAttribute("name") === "all") {
+							break;
+						}
+					}
+			
 					var immediateParent = currRemove.parentNode
 					immediateParent.removeChild(currRemove)
 

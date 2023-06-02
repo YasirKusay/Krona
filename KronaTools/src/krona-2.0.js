@@ -3757,6 +3757,7 @@ value="&harr;" title="Expand this wedge to become the new focus of the chart"/><
 			//console.log(kronaElement)
 			// sessionStorage.setItem("body", document.body.innerHTML);
 			sessionStorage.setItem("currBody", newStart);
+			sessionStorage.setItem("reset", "true")
 			console.log(document.body.innerHTML)
 			location.reload()
 		}
@@ -5030,13 +5031,24 @@ function load()
 	// below appears to be redundant but is absolutely necessary
 	var temp = document.body.innerHTML;
 	document.body.innerHTML = temp;
+
+	// first time loading, store original html
+	if (sessionStorage.getItem("originalBody") === null) {
+		sessionStorage.setItem("originalBody", document.body.innerHTML)
+	}
 	
 	console.log(defaultDomState);
 	if (sessionStorage.getItem("currBody") !== null) {
-		console.log("HELLO")
-		console.log(sessionStorage.getItem("currBody"));
-		document.body.innerHTML = sessionStorage.getItem("currBody");
+		if (sessionStorage.getItem("reset") === "true") {
+			console.log("HELLO")
+			console.log(sessionStorage.getItem("currBody"));
+			document.body.innerHTML = sessionStorage.getItem("currBody");
+		} else {
+			document.body.innerHTML = sessionStorage.getItem("originalBody");
+		}
 	}
+
+	sessionStorage.setItem("reset", "false")
 
 	document.body.style.overflow = "hidden";
 	document.body.style.margin = 0;

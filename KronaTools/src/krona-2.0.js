@@ -5032,20 +5032,11 @@ function load()
 	var temp = document.body.innerHTML;
 	document.body.innerHTML = temp;
 
-	// first time loading, store original html
-	if (sessionStorage.getItem("originalBody") === null) {
-		sessionStorage.setItem("originalBody", document.body.innerHTML)
-	}
-	
-	console.log(defaultDomState);
 	if (sessionStorage.getItem("currBody") !== null) {
+		// if reset is false, just use the original structure, it will not get reassigned!
 		if (sessionStorage.getItem("reset") === "true") {
-			console.log("HELLO")
-			console.log(sessionStorage.getItem("currBody"));
 			document.body.innerHTML = sessionStorage.getItem("currBody");
-		} else {
-			document.body.innerHTML = sessionStorage.getItem("originalBody");
-		}
+		} 
 	}
 
 	sessionStorage.setItem("reset", "false")
